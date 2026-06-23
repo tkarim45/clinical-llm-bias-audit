@@ -159,16 +159,6 @@ clinical-llm-bias-audit/
 
 ---
 
-## Responsible-AI framing (résumé bullet)
-
-> *Built a reproducible fairness-audit framework (Geographic Disparity Index) for clinical
-> LLMs across OpenAI/Bedrock providers; deterministic perturbation engine + from-scratch
-> Wilcoxon/BCa-bootstrap stats; audited [N] models over 300+ perturbed cases each and
-> reported geographic disparity with Bonferroni-corrected significance, CIs, and a power
-> analysis — shipped as a CLI, FastAPI service, and dashboard.*
-
----
-
 ## Research provenance
 
 This is the engineering-productionized version of a graduate research project, *"Auditing
