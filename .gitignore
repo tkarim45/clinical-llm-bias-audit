@@ -1,0 +1,22 @@
+# secrets
+.env
+
+# audit run outputs (regenerate from configs; examples/sample_run is the committed demo)
+runs/
+*/.cache/
+
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.venv/
+env/
+
+# os / editor
+.DS_Store
+.vscode/
+.idea/
