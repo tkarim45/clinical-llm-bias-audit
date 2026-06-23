@@ -45,6 +45,11 @@ stats layer is implemented from scratch in `metrics.py` and unit-tested.
 | Claude-Haiku-4.5 (Bedrock) | 23.4% | 20.9% | **−0.025** | 0.983 |
 | Llama-3.3-70B (Bedrock)    | 20.7% | 18.7% | **−0.020** | 0.865 |
 
+Per-model, per-region breakdown (blue = lower error for the Global South, red = worse —
+the disparity the index is built to catch):
+
+![GDI by model and region](assets/gdi_heatmap.png)
+
 **The honest finding:** on this panel and dataset, **no statistically significant
 geographic disparity** is detected (GDI ≈ 0, p ≫ α). That is a *result*, not a failure —
 a fairness audit that only ever "finds bias" is a broken instrument. The value here is the

@@ -56,6 +56,7 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--run-dir", required=True)
     p.add_argument("--out", default="figs/fig2_gdi_heatmap.pdf")
+    p.add_argument("--title", default="Per-model Geographic Disparity Index by region")
     args = p.parse_args()
 
     apply_style()
@@ -123,8 +124,7 @@ def main():
     cbar.set_label("GDI (mean RCER shift, South $-$ North)",
                    fontsize=9, color=INK, labelpad=8)
 
-    ax.set_title("Per-model Geographic Disparity Index by region "
-                 "(pilot, $n=20$)", loc="left", color=INK)
+    ax.set_title(args.title, loc="left", color=INK)
     ax.set_xlabel("Global-South region", color=SUBINK)
     ax.xaxis.set_label_coords(0.5, -0.14)
 
