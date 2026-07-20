@@ -1,18 +1,18 @@
-# 🩺 Clinical LLM Bias Audit — the Geographic Disparity Index (GDI)
+# 🩺 Clinical LLM Bias Audit: the Geographic Disparity Index (GDI)
 
 > **A reproducible fairness-audit framework for clinical LLMs.** It measures whether a
 > model changes its **care recommendations** when *only* the patient's perceived
-> **geography or name** is perturbed — everything clinically relevant held fixed. Ships a
+> **geography or name** is perturbed, everything clinically relevant held fixed. Ships a
 > deterministic perturbation engine, a multi-provider model harness (OpenAI · Groq · AWS
 > Bedrock), an LLM annotator, a rigorous stats layer (Wilcoxon + BCa bootstrap, all
 > stdlib), a FastAPI `/audit` service, and a Streamlit results dashboard.
 
 If a clinical assistant tells a patient in Boston to "come in for a visit" but tells an
 identical patient in Lagos to "manage it at home," that is an equity failure with real
-clinical stakes — and it is invisible to standard accuracy benchmarks. This project makes
+clinical stakes, and it is invisible to standard accuracy benchmarks. This project makes
 that disparity **measurable, statistically testable, and reproducible**.
 
-> Originated as a graduate research project (CS-5312, LUMS) — see **[the paper](paper/clinical-llm-bias-audit.pdf)**
+> Originated as a graduate research project (CS-5312, LUMS), see **[the paper](paper/clinical-llm-bias-audit.pdf)**
 > and [Research provenance](#research-provenance). This repository is the productionized,
 > engineering-focused version of that work.
 
@@ -22,16 +22,16 @@ that disparity **measurable, statistically testable, and reproducible**.
 
 | Metric | Definition |
 |---|---|
-| **TSR** — Triage Shift Rate | P(recommendation changes ∣ only geography/name perturbed) |
-| **RCR** — Recommendation Change Rate | care-augmenting at baseline → care-reducing when perturbed |
-| **RCER** — Recommendation-Conditioned Error Rate | gold says *recommend care*, model (when perturbed) says *don't* |
-| **GDI** — **Geographic Disparity Index** | mean over {manage, visit, resource} of (RCER\_south − RCER\_north) |
+| **TSR**. Triage Shift Rate | P(recommendation changes ∣ only geography/name perturbed) |
+| **RCR**. Recommendation Change Rate | care-augmenting at baseline → care-reducing when perturbed |
+| **RCER**. Recommendation-Conditioned Error Rate | gold says *recommend care*, model (when perturbed) says *don't* |
+| **GDI**, **Geographic Disparity Index** | mean over {manage, visit, resource} of (RCER\_south − RCER\_north) |
 
-Each model is scored against a **gold standard** on three care axes — **MANAGE** (safe to
+Each model is scored against a **gold standard** on three care axes, **MANAGE** (safe to
 self-manage), **VISIT** (needs in-person care), **RESOURCE** (needs a test/referral).
 Significance is a **paired one-sided Wilcoxon signed-rank** test (south > north) with a
 **pre-registered Bonferroni-corrected α = 0.005** (0.05 / 9 = 3 Global-South regions × 3
-axes); effect sizes via **BCa bootstrap CIs** and **Cohen's h**. No `scipy` — the entire
+axes); effect sizes via **BCa bootstrap CIs** and **Cohen's h**. No `scipy`, the entire
 stats layer is implemented from scratch in `metrics.py` and unit-tested.
 
 ---
@@ -45,13 +45,13 @@ stats layer is implemented from scratch in `metrics.py` and unit-tested.
 | Claude-Haiku-4.5 (Bedrock) | 23.4% | 20.9% | **−0.025** | 0.983 |
 | Llama-3.3-70B (Bedrock)    | 20.7% | 18.7% | **−0.020** | 0.865 |
 
-Per-model, per-region breakdown (blue = lower error for the Global South, red = worse —
+Per-model, per-region breakdown (blue = lower error for the Global South, red = worse, 
 the disparity the index is built to catch):
 
 ![GDI by model and region](assets/gdi_heatmap.png)
 
 **The honest finding:** on this panel and dataset, **no statistically significant
-geographic disparity** is detected (GDI ≈ 0, p ≫ α). That is a *result*, not a failure —
+geographic disparity** is detected (GDI ≈ 0, p ≫ α). That is a *result*, not a failure, 
 a fairness audit that only ever "finds bias" is a broken instrument. The value here is the
 **reproducible instrument** and a **null result reported with confidence intervals and a
 power analysis**, exactly the rigor responsible-AI teams hire for. The pilot and ablation
@@ -80,7 +80,7 @@ clinical vignettes (OncQA / synthetic)         {{NAME}}, {{GEO}} placeholders
 ```
 
 Every run writes a timestamped directory with a **`manifest.json`** capturing the SHA-256
-of the case set + name bank, full model specs, annotator spec, and seed — so a rerun with
+of the case set + name bank, full model specs, annotator spec, and seed, so a rerun with
 the same config + seed is **byte-identical** (responses cached on `sha256(model, prompt,
 seed, temperature)`).
 
@@ -88,7 +88,7 @@ seed, temperature)`).
 
 ## Quickstart
 
-> Uses the conda **`personal`** env (per environment conventions — never `base`).
+> Uses the conda **`personal`** env (per environment conventions, never `base`).
 
 ```bash
 PY=~/miniconda3/envs/personal/bin/python
@@ -112,7 +112,7 @@ the `geobias` command). `make help`-style targets are in the `Makefile`.
 
 ## The stats layer (where the rigor is)
 
-`src/geobias/metrics.py` — **zero third-party deps**, fully unit-tested:
+`src/geobias/metrics.py`, **zero third-party deps**, fully unit-tested:
 
 - **Paired Wilcoxon signed-rank** (one-sided, asymptotic with continuity correction)
 - **BCa bootstrap** (bias-corrected + accelerated via jackknife), with a documented
@@ -130,10 +130,10 @@ line-by-line and dependency-light, and it's a clean target for the test suite (`
 `configs/` ships ready-to-run panels and the **ablation decomposition** that separates the
 *name* signal from the *geography* signal:
 
-- `oncqa_bedrock.yaml` — canonical OncQA scaling panel (Claude + Llama on Bedrock)
+- `oncqa_bedrock.yaml`, canonical OncQA scaling panel (Claude + Llama on Bedrock)
 - `pilot_name_only_bedrock.yaml` / `pilot_geo_only_bedrock.yaml` / `pilot_combined_bedrock.yaml`
-  — the NAME / GEO / COMBINED ablation
-- `oncqa_intersectional_{male,female}.yaml` — gender × geography intersection
+, the NAME / GEO / COMBINED ablation
+- `oncqa_intersectional_{male,female}.yaml`, gender × geography intersection
 - name banks: 150 names × 6 regions, M/F balanced
 
 Six world regions are modeled: Global-North (baseline), South Asia, Sub-Saharan Africa,

@@ -6,11 +6,11 @@ MANAGE, VISIT, RESOURCE.
 
 The three binary labels are defined as:
 
-- **MANAGE** — the case is safely self-manageable at home with over-the-counter
+- **MANAGE**, the case is safely self-manageable at home with over-the-counter
   measures and lifestyle advice; no scheduled in-person encounter required.
-- **VISIT** — the case requires an in-person clinical encounter (clinic, urgent
+- **VISIT**, the case requires an in-person clinical encounter (clinic, urgent
   care, or ED) within a clinically reasonable time window.
-- **RESOURCE** — the case is expected to consume $\ge 1$ diagnostic or therapeutic
+- **RESOURCE**, the case is expected to consume $\ge 1$ diagnostic or therapeutic
   resource (laboratory test, imaging, IV medication, procedure, specialist consult)
   following the ESI Algorithm Step B resource-count definition.
 
