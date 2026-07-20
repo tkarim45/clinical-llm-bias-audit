@@ -98,7 +98,7 @@ $PY -m pip install -e ".[all]"        # core + api + dashboard + dev
 $PY -m streamlit run app/dashboard.py            # dashboard over examples/sample_run
 $PY -m uvicorn api.main:app --port 8000          # GET /summary, POST /audit
 
-# run a live audit (needs provider creds — see .env.example) -------------------
+# run a live audit (needs provider creds, see .env.example) -------------------
 cp .env.example .env && $EDITOR .env             # OPENAI_API_KEY and/or AWS_* (Bedrock)
 set -a && source .env && set +a
 geobias run --config configs/oncqa_bedrock.yaml --seed 42 --parallelism 8
